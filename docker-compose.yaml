@@ -1,0 +1,33 @@
+version: '3.8'
+services:
+  dynamodb:
+    image: openjdk:11
+    restart: always
+    command: 'java -Djava.library.path=./DynamoDBLocal_lib -jar ./DynamoDBLocal.jar & -dbPath ./data'
+    container_name: xc-dynamodb
+    working_dir: /home
+    volumes:
+      - ./dynamodb_local_latest/:/home
+    ports:
+      - 8000:8000
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.2
+    container_name: xc-elasticsearch
+    environment:
+      - xpack.security.enabled=false
+      - discovery.type=single-node
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+    cap_add:
+      - IPC_LOCK
+    volumes:
+      - ./elasticsearch/esdata1:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+      - 9300:9300
