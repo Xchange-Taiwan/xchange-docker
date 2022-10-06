@@ -9,7 +9,8 @@
 <br>
 
 ####ElasticSearch Setup
-- Description...
+- Create folder `elasticsearch/esdata1` in current directory. 
+- Desc...
 <br>
 
 ####Launch Docker
